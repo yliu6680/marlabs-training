@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Open Weather Map API Using AJAX</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/weather.js"></script>
+
+<style type="text/css">
+input {
+	margin:10px;
+}
+
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+</style>
+
+</head>
+<body>
+<h1>Find the weather report by your zip code (Using Pure JavaScript):</h1>
+<label for="zipcode">Your Zipcode</label>
+<input type="text" id="zipcode" /> 
+<br/>
+<input type="button" value="Query" id="javascript-query" onClick="getWeatherByZip()" />
+
+<div id="content">Response comes here ...</div>
+
+<br/>
+
+<h1>OR</h1>
+
+<br/>
+
+<h1>Find the weather report by your geolocation (Using JQuery getJSON):</h1>
+<label for="latitude">Your Latitude</label>
+<input type="text" id="latitude" /> 
+<br/>
+<label for="longitude">Your Longitude</label>
+<input type="text" id="longitude" />
+
+<br/>
+<input type="button" value="Get My Location" id="getmylocation" />
+<input type="button" value="Query" id="jquery-query" />
+
+<div id="content-jquery">Response comes here ...</div>
+
+<br/>
+<p id="currenturl"></p>
+<br/><br/><br/>
+
+<h1>Using the JQuery ajax</h1>
+<label for="zipcode2">Your Zipcode</label>
+<input type="text" id="zipcode2" /> 
+<br/>
+<input type="button" value="OK" id="ok" />
+<br/>
+<div id="content-jquery2">Response comes here ...</div>
+
+<br/><br/><br/>
+</body>
+</html>
