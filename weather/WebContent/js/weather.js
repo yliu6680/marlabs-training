@@ -20,7 +20,8 @@ function getWeatherByZip(){
 	var zipCode = document.getElementById("zipcode").value;
 	var myApiKey = "eccd0cc4a2bdb575839f516d7cb31567";
 	
-	var url = "http://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + ",us&appid=" + myApiKey;
+	var url = "https://api.github.com/users?since=125";
+//	var url = "http://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + ",us&appid=" + myApiKey;
 	console.log(url);
 	
 	var AJAX = initAJAX();
@@ -31,6 +32,27 @@ function getWeatherByZip(){
 	
 	function processResponse () {
 		if(AJAX.readyState == 4 && AJAX.status == 200){
+			console.log("This is ajax object header");
+			var r = AJAX.getResponseHeader('Link');
+			
+			
+			r = r.split(',');
+			console.log(r);
+			
+			var parsedLink = {};
+			var temp = [];
+			for (var i = 0; i < r.length; i++) {
+				// Runs 5 times, with values of step 0 through 4.
+				temp = r[i].split(';');
+				parsedLink[temp[1]] = temp[0]; 
+			}
+			
+			console.log(temp);
+//			console.log(r['next']['href']);
+//			console.log(r['prev']['href']);
+//			console.log(r['first']['href']);
+//			console.log(r['last']['href']);
+			
 			// console.log(AJAX.responseText);
 			var WeatherResponse = JSON.parse(AJAX.responseText);
 			console.log(WeatherResponse);
@@ -123,18 +145,19 @@ $("document").ready(function(){
 		console.log(url);
 		
 		$.ajax({
-			url: url
-		}).then(function(data){
-			console.log(data);
-			
-			var area = "<p><b>Area</b> : " + data.name + "</p>";
-			var tempMin = "<p><b>Lowest temperature</b> : " + data.main.temp_min + "</p>";
-			var tempMax = "<p><b>Highest temperature</b> : " + data.main.temp_max + "</p>";
-			var weather = "<p><b>Weather</b> : " + data.weather[0].main + "</p>";
-			var longitude = "<p><b>Longitude</b> : " + data.coord.lon + "</p>";
-			var latitude = "<p><b>Latitude</b> : " + data.coord.lat + "</p>";
-			
-			$("#content-jquery2").html(area + tempMin + tempMax + weather + latitude + longitude);
+			url: url,
+			success: function(data){
+				console.log(data);
+				
+				var area = "<p><b>Area</b> : " + data.name + "</p>";
+				var tempMin = "<p><b>Lowest temperature</b> : " + data.main.temp_min + "</p>";
+				var tempMax = "<p><b>Highest temperature</b> : " + data.main.temp_max + "</p>";
+				var weather = "<p><b>Weather</b> : " + data.weather[0].main + "</p>";
+				var longitude = "<p><b>Longitude</b> : " + data.coord.lon + "</p>";
+				var latitude = "<p><b>Latitude</b> : " + data.coord.lat + "</p>";
+				
+				$("#content-jquery2").html(area + tempMin + tempMax + weather + latitude + longitude);
+			}
 		})
 	});
 });
